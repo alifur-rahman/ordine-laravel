@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'YourFont', sans-serif;
+    /* Add any other global styles you need */
+}
+
+/* Set the main content to take full height and width of the viewport */
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #ffffff; /* Adjust the background color as needed */
+}
+
+/* Add padding to the top of the main content to account for the fixed navbar */
+.main {
+    padding-top: 70px; /* Adjust the padding based on your navbar height */
+}
+
+/* Hero Section Styles */
+#home {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* Text color on the hero section */
+}
+
+/* Product Section Styles */
+#product {
+    background-color: #6f42c1;
+    color: white;
+    padding: 40px 0;
+}
+
+/* Footer Styles */
+section.py-0 {
+    background-color: #6f42c1;
+    color: white;
+    padding: 40px 0;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 767px) {
+    /* Adjust styles for smaller screens */
+
+    /* Reduce padding on the main content for smaller screens */
+    .main {
+        padding-top: 56px; /* Adjust the padding based on your navbar height */
+    }
+
+    /* Adjust font sizes or other styles as needed for smaller screens */
+    h1 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+}
