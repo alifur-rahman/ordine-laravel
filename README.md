@@ -1,45 +1,146 @@
-# www.thatswe.de - Digital Holiday Companion
+# Laravel PDF Printer
 
-## Description
-
-Welcome to the README for www.thatswe.de, your digital holiday companion! This app is designed for holidaymakers and is exclusively available through licensed travel agencies or tour operators.
+This is a Laravel application that demonstrates how to design a page and include a button to print the page as a PDF using Laravel DomPDF.
 
 ## Features
 
-1. **Digital Holiday Companion**
+-   Design a web page with Laravel Blade templates
+-   Include a button to print the page as a PDF
+-   Use Laravel DomPDF for PDF generation
 
-    - Obtainable exclusively through licensed travel agencies or tour operators.
-    - Offered as part of a holiday booking to customers.
-    - Installation options: direct installation on the customer's Android phone or installation on a device (Android, without SIM card) or tablet.
+## Requirements
 
-2. **Advantages for Participating Travel Agencies**
+-   PHP >= 7.4
+-   Composer
+-   Laravel >= 8.0
 
-    - Significant advantages over non-participating agencies.
-    - Exclusive access to individual app modules.
+## Installation
 
-3. **Individual Modules in the App**
+1. Clone the repository:
 
-    - Complete management of booking data.
-    - Arrival and departure data management.
-    - Information about accommodation at the holiday destination.
-    - Details about the holiday destination and its surroundings.
-    - Search function (hospital, doctor, amusement park, taxi rank, etc.).
-    - Online translation during conversations with locals.
-    - Diary for recording holiday experiences.
-    - Management of personal and health data.
-    - Print management for all app pages.
-    - Printout of all vacation documentation.
+    ```sh
+    git clone https://github.com/alifur-rahman/ordine-laravel/
+    ```
 
-4. **Customization Options**
+2. Navigate to the project directory:
 
-    - Participating travel agencies can give the app a unique name (e.g., "Meiers Urlaubsgeleiter").
-    - Integration of a custom app logo or company logo.
+    ```sh
+    cd laravel-pdf-printer
+    ```
 
-5. **Legal and Privacy**
+3. Install the dependencies:
 
-    - Legal notice and data protection declaration integrated after consultation with the app purchaser.
+    ```sh
+    composer install
+    ```
 
-6. **Distribution and Pricing**
-    - The app will not be placed in a shop unless requested by the app purchaser.
-    - Distributed to travel agencies at an annual flat rate.
-    - The first license year begins the next month after delivery, pro-rated for the remaining months of the current year. The app contains a note about the license year.
+4. Copy the `.env.example` file to `.env`:
+
+    ```sh
+    cp .env.example .env
+    ```
+
+5. Generate the application key:
+
+    ```sh
+    php artisan key:generate
+    ```
+
+6. Set up your database in the `.env` file:
+
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
+
+7. Run the migrations:
+
+    ```sh
+    php artisan migrate
+    ```
+
+8. Install Laravel DomPDF:
+
+    ```sh
+    composer require barryvdh/laravel-dompdf
+    ```
+
+9. Publish the configuration file:
+    ```sh
+    php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+    ```
+
+## Usage
+
+1. Create a route to display the page and another to generate the PDF:
+
+    ```php
+    // routes/web.php
+
+    Route::get('/page', [App\Http\Controllers\PageController::class, 'showPage'])->name('showPage');
+    Route::get('/page/pdf', [App\Http\Controllers\PageController::class, 'generatePDF'])->name('generatePDF');
+    ```
+
+2. Create a controller to handle the logic:
+
+    ```php
+    // app/Http/Controllers/PageController.php
+
+    namespace App\Http\Controllers;
+
+    use Illuminate\Http\Request;
+    use PDF;
+
+    class PageController extends Controller
+    {
+        public function showPage()
+        {
+            return view('page');
+        }
+
+        public function generatePDF()
+        {
+            $data = []; // Add data if needed
+            $pdf = PDF::loadView('page', $data);
+            return $pdf->download('page.pdf');
+        }
+    }
+    ```
+
+3. Create the Blade view:
+
+    ```blade
+    <!-- resources/views/page.blade.php -->
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <h1>This is the page you want to print as PDF</h1>
+        <p>Here you can add more content.</p>
+        <a href="{{ route('generatePDF') }}" class="btn btn-primary">Print as PDF</a>
+    </body>
+    </html>
+    ```
+
+4. Serve the application:
+
+    ```sh
+    php artisan serve
+    ```
+
+5. Visit `http://localhost:8000/page` to see the page with the "Print as PDF" button.
+
+## Contributing
+
+Feel free to submit issues or pull requests.
+
+## License
+
+This project is licensed under the MIT License.

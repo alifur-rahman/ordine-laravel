@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [App\Http\Controllers\TravelController::class, 'welcome'])->name('welcome-page');
+Route::get('/download', [App\Http\Controllers\TravelController::class, 'welcome'])->name('welcome-page');
 
 
